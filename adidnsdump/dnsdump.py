@@ -360,6 +360,7 @@ def main():
     parser.add_argument("--referralhosts", action='store_true', help="Allow passthrough authentication to all referral hosts")
     parser.add_argument("--dcfilter", action='store_true', help="Use an alternate filter to identify DNS record types")
     parser.add_argument("--sslprotocol", type=native_str, help="SSL version for LDAP connection, can be SSLv23, TLSv1, TLSv1_1 or TLSv1_2")
+    parser.add_argument("-o","--output", help="Output file")
 
     args = parser.parse_args()
     #Prompt for password if not set
@@ -502,7 +503,7 @@ def main():
 
             continue
     print_o('Found %d records' % len(outdata))
-    with codecs.open('records.csv', 'w', 'utf-8') as outfile:
+    with codecs.open(args.output, 'w', 'utf-8') as outfile:
         outfile.write('type,name,value\n')
         for row in outdata:
             outfile.write('{type},{name},{value}\n'.format(**row))
